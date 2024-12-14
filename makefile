@@ -1,5 +1,5 @@
 CXX=g++
-FLAGS=-std=c++20
+FLAGS=-std=c++20 -g3
 
 all: test
 

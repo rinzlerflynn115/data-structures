@@ -2,6 +2,9 @@
 #include <memory>
 #include <iostream>
 
+/**
+ * Queue implemented on a dynamic array. Array kinda plays snake with itself as you push/pop and resizes itself.
+ */
 template <typename T>
 class Queue {
 private:
@@ -13,7 +16,7 @@ private:
     int headIndex;
 
     void grow() {
-        std::cout << "Resizing internal array from " << this->currentSize << " to " << this->currentSize * 2 << std::endl;
+        //std::cout << "Resizing internal array from " << this->currentSize << " to " << this->currentSize * 2 << std::endl;
         std::unique_ptr<T[]> newArray = std::make_unique<T[]>(this->currentSize * 2);
         int ptr = this->headIndex;
         int count = 0;
@@ -28,8 +31,29 @@ private:
         this->nextInsertIndex = this->entries;
         this->data = std::move(newArray);
     }
+
 public:
-    Queue() : currentSize(defaultSize), entries(0), nextInsertIndex(0), headIndex(0), data(std::make_unique<T[]>(currentSize)) {}
+    Queue() : currentSize(defaultSize), entries(0), nextInsertIndex(0), headIndex(0) {
+        this->data = std::make_unique<T[]>(this->currentSize);
+    }
+
+    Queue(const Queue<T>& other) : currentSize(other.currentSize), entries(other.entries), headIndex(other.headIndex), nextInsertIndex(other.nextInsertIndex) {
+        this->data = std::make_unique<T[]>(this->currentSize);
+        for(int i = 0; i < this->currentSize; ++i){
+            this->data[i] = other.data[i];
+        }
+    }
+
+    const Queue<T>& operator=(const Queue<T>& other) {
+        this->currentSize = other.currentSize;
+        this->entries = other.entries;
+        this->headIndex = other.headIndex;
+        this->nextInsertIndex = other.nextInsertIndex;
+        this->data = std::make_unique<T[]>(this->currentSize);
+        for(int i = 0; i < this->currentSize; ++i) {
+            this->data[i] = other.data[i];
+        }
+    }
 
     void push(T item) {
         this->data[this->nextInsertIndex++] = item;
@@ -40,7 +64,7 @@ public:
         if(this->nextInsertIndex  >= this->currentSize) {
             this->nextInsertIndex = 0;
         }
-        std::cout << "HEAD: " << this->headIndex << " NEXT: " << this->nextInsertIndex << std::endl;
+        //std::cout << "HEAD: " << this->headIndex << " NEXT: " << this->nextInsertIndex << std::endl;
     }
 
     T pop() {
@@ -48,10 +72,10 @@ public:
         this->entries--;
         if(this->headIndex >= this->currentSize) {
             this->headIndex = 0;
-            std::cout << "HEAD: " << this->headIndex << " NEXT: " << this->nextInsertIndex << std::endl;
+            //std::cout << "HEAD: " << this->headIndex << " NEXT: " << this->nextInsertIndex << std::endl;
             return this->data[this->currentSize - 1];
         }
-        std::cout << "HEAD: " << this->headIndex<< " NEXT: " << this->nextInsertIndex << std::endl;
+        //std::cout << "HEAD: " << this->headIndex<< " NEXT: " << this->nextInsertIndex << std::endl;
         return this->data[this->headIndex -1];
     }
 
