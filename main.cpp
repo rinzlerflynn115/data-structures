@@ -1,8 +1,11 @@
+#include <cassert>
 #include <iostream>
+#include <string>
 #include "queue.h"
 #include "stack.h"
 
 void queueTests() {
+    std::cout << "//-- testing queue functions --//" << std::endl;
     //test basic queue stuff
     Queue<int> q{};
     q.push(1);
@@ -46,10 +49,38 @@ void queueTests() {
 }
 
 void stackTests() {
+    std::cout << "//-- testing stack functions. --//" << std::endl;
     Stack<int> s {};
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.dump();
+    s.pop();
+    s.dump();
+    s.pop();
+    s.pop();
+    try {
+        s.pop();
+    } catch(std::runtime_error &e) {
+        assert(std::string(e.what()) == "Attempted to pop empty stack.");
+    }
+    if(s.empty()) {
+        std::cout << "Stack is empty." << std::endl;
+    }
+    s.push(1);
+    s.push(2);
+    Stack<int> s2 {s};
+    s.dump();
+    s2.dump();
+    s.push(3);
+    s2.push(4);
+    s.pop();
+    s.pop();
+    s.dump();
+    s2.dump();
 }
 
 int main() {
-    
+    stackTests();
     return 0;
 }

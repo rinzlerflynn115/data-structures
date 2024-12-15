@@ -18,8 +18,15 @@ private:
         data = std::move(newArray);
     }
 public:
-    Stack() : elements(0), currentSize(0) {
-        data = std::make_unique<T[]>(defaultSize);
+    Stack() : elements(0), currentSize(defaultSize) {
+        data = std::make_unique<T[]>(this->currentSize);
+    }
+
+    Stack(const Stack<T>& other) : elements(other.elements), currentSize(other.currentSize) {
+        this->data = std::make_unique<T[]>(this->currentSize);
+        for(int i = 0; i < this->currentSize; ++i) {
+            this->data[i] = other.data[i];
+        }
     }
 
     void push(T elem) {
@@ -33,7 +40,7 @@ public:
         if(elements > 0) {
             return data[elements--];
         }
-        return nullptr;
+        throw std::runtime_error("Attempted to pop empty stack.");
     }
 
     int size() { return elements; }

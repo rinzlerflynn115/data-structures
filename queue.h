@@ -69,7 +69,7 @@ public:
 
     T pop() {
         if(this->entries == 0) {
-            return nullptr;
+            throw std::runtime_error("Attempted to pop empty queue.");
         }
         this->headIndex++;
         this->entries--;
