@@ -3,8 +3,8 @@ FLAGS=-std=c++20 -g3
 
 all: test
 
-test: main.cpp queue.h
+test: main.cpp queue.h stack.h
 	$(CXX) $(FLAGS) main.cpp -o main
 
 clean:
-	rm -f queue.o main
+	rm -f queue.o stack.o main

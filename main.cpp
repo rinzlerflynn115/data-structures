@@ -1,7 +1,8 @@
 #include <iostream>
 #include "queue.h"
+#include "stack.h"
 
-int main() {
+void queueTests() {
     //test basic queue stuff
     Queue<int> q{};
     q.push(1);
@@ -42,6 +43,13 @@ int main() {
     q2.dump();
     std::cout << "q3: ";
     q3.dump();
+}
+
+void stackTests() {
+    Stack<int> s {};
+}
+
+int main() {
     
     return 0;
 }

@@ -68,6 +68,9 @@ public:
     }
 
     T pop() {
+        if(this->entries == 0) {
+            return nullptr;
+        }
         this->headIndex++;
         this->entries--;
         if(this->headIndex >= this->currentSize) {
