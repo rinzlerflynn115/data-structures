@@ -29,6 +29,15 @@ public:
         }
     }
 
+    const Stack<T>& operator=(const Stack<T>& other) {
+        this->elements = other.elements;
+        this->currentSize = other.currentSize;
+        this->data = std::make_unique<T[]>(this->currentSize);
+        for(int i = 0; i < this->currentSize; ++i) {
+            this->data[i] = other.data[i];
+        }
+    }
+
     void push(T elem) {
         data[elements++] = elem;
         if(elements == currentSize) {

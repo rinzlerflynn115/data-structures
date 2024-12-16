@@ -4,8 +4,12 @@
 #include "queue.h"
 #include "stack.h"
 
+void br(std::string msg) {
+    std::cout << "//----- " << msg << " -----//" << std::endl;
+}
+
 void queueTests() {
-    std::cout << "//-- testing queue functions --//" << std::endl;
+    br("testing queue functions");
     //test basic queue stuff
     Queue<int> q{};
     q.push(1);
@@ -17,8 +21,7 @@ void queueTests() {
     //queue is set to default internal array size 4, this push forces it to resize
     q.push(5);
     q.dump();
-    //test copy ctor
-    
+    br("test copy constructor");
     Queue<int> q2{q};
     std::cout << "q: ";
     q.dump();
@@ -32,9 +35,8 @@ void queueTests() {
     q.dump();
     std::cout << "q2: ";
     q2.dump();
-
+    br("test assignment");
     Queue<int> q3 = q2;
-    std::cout << "----------" << std::endl;
     std::cout << "q2: ";
     q2.dump();
     std::cout << "q3: ";
@@ -49,7 +51,7 @@ void queueTests() {
 }
 
 void stackTests() {
-    std::cout << "//-- testing stack functions. --//" << std::endl;
+    br("testing stack functions");
     Stack<int> s {};
     s.push(1);
     s.push(2);
@@ -69,6 +71,8 @@ void stackTests() {
     }
     s.push(1);
     s.push(2);
+    // Copy constructor
+    br("test copy constructor");
     Stack<int> s2 {s};
     s.dump();
     s2.dump();
@@ -78,9 +82,22 @@ void stackTests() {
     s.pop();
     s.dump();
     s2.dump();
+    // Assignment
+    br("test assignment");
+    Stack<int> s3 = s2;
+    s2.dump();
+    s3.dump();
+    s3.pop();
+    s3.push(5);
+    s3.push(6);
+    s2.pop();
+    s2.pop();
+    s2.dump();
+    s3.dump();
 }
 
 int main() {
+    queueTests();
     stackTests();
     return 0;
 }
