@@ -96,7 +96,6 @@ public:
                 root = cur->r;
             }
             delete cur;
-            root = nullptr;
             return;
         }
         
@@ -133,7 +132,6 @@ public:
                         prev->l = cur->r;
                     }
                     //finally clean up the node and break
-                    std::cout << "Deleting " << cur->data << std::endl;
                     delete cur;
                     return;
                 } else {
@@ -164,7 +162,6 @@ public:
                         cur->r->l = cur->l;
                         prev->r = cur->r;
                     }
-                    std::cout << "Deleting " << cur->data << std::endl;
                     delete cur;
                     return;
                 }

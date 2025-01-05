@@ -9,6 +9,10 @@ void br(std::string msg) {
     std::cout << "//----- " << msg << " -----//" << std::endl;
 }
 
+void br() {
+    std::cout << std::endl;
+}
+
 void queueTests() {
     br("testing queue functions");
     //test basic queue stuff
@@ -99,10 +103,84 @@ void stackTests() {
 
 void setTests() {
     Set<int> set {};
+    //5, _
     set.insert(5);
     set.dump();
     set.remove(5);
     set.dump();
+    set.clear();
+    br();
+
+    //4 5 6, 4 6
+    set.insert(5);
+    set.insert(4);
+    set.insert(6);
+    set.dump();
+    set.remove(5);
+    set.dump();
+    set.clear();
+    br();
+
+    //4 5 6, 5 6
+    set.insert(5);
+    set.insert(4);
+    set.insert(6);
+    set.dump();
+    set.remove(4);
+    set.dump();
+    br();
+
+    //4 5 6, 4 5
+    set.insert(5);
+    set.insert(4);
+    set.insert(6);
+    set.dump();
+    set.remove(6);
+    set.dump();
+    br();
+
+    //1 2 3 4 5 6 7, 1 2 3 5 6 7
+    set.insert(4);
+    set.insert(2);
+    set.insert(1);
+    set.insert(3);
+    set.insert(6);
+    set.insert(5);
+    set.insert(7);
+    set.dump();
+    set.remove(4);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2, 2
+    set.insert(2);
+    set.insert(1);
+    set.dump();
+    set.remove(1);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3, 1 3
+    set.insert(3);
+    set.insert(2);
+    set.insert(1);
+    set.dump();
+    set.remove(2);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3, 2 3
+    set.insert(3);
+    set.insert(1);
+    set.insert(2);
+    set.dump();
+    set.remove(1);
+    set.dump();
+    set.clear();
+    br();
 }
 
 int main() {
