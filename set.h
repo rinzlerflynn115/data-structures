@@ -12,6 +12,16 @@ private:
     };
     Node* root;
 
+    void clear(Node* cur) {
+        if(cur->l) {
+            clear(cur->l);
+        }
+        if(cur->r) {
+            clear(cur->r);
+        }
+        delete cur;
+    }
+
     void dump(Node* cur) {
         if(cur->l) {
             dump(cur->l);
@@ -64,50 +74,123 @@ public:
         Node* prev = nullptr;
         Node* cur = root;
 
-        if(root->data == val) {
-            delete root;
-        }
-
-        if(cur->data > val) {
-            prev = cur;
-            cur = cur->l;
-        } else if(cur->data < val) {
-            prev = cur;
-            cur = cur->r;
-        } else {
-            if(prev->l == cur) {
-                //left child removal
-                if(!cur->r) {
-                    prev->l = cur->l;
-                    return;
+        //if the root is the node we want, handle it specially
+        if(cur->data == val) {
+            if(!cur->l && !cur->r) {
+                root = nullptr;
+            } else if(!cur->l) {
+                cur = cur->r;
+            } else if(!cur->r) {
+                cur = cur->l;
+            } else {
+                //arbitrarily shift to r
+                if(cur->r->l) {
+                    Node* childToMove = cur->r->l;
+                    Node* ptr = cur->l;
+                    while(ptr->r) {
+                        ptr = ptr->r;
+                    }
+                    ptr->r = childToMove;
                 }
-                Node* nodeToMove = cur->r;
-                Node* nodeToMoveLChild = nodeToMove->l;
-
-                prev->l = nodeToMove;
-                nodeToMove->l = cur->l;
-
-                cur = nodeToMove->l;
-                while(cur->r){
-                    cur = cur->r;
-                }
-                cur->r = nodeToMoveLChild;
-            } else if(prev->r == cur) {
-                //right child removal
-                if(!cur->l) {
-                    prev->r = cur->r;
-                    return;
-                }
-                Node* nodeToMove = cur->l;
-                Node* nodeToMoveRChild = nodeToMove->r;
+                cur->r->l = cur->l;
+                root = cur->r;
             }
+            delete cur;
+            root = nullptr;
+            return;
+        }
+        
+        //find the node with the target value
+        while(cur) {
+            if(cur->data == val) {
+                //found the node
+                if(prev->l == cur) {
+                    //left child removal
+                    if(!cur->l && !cur->r) {
+                        //if no children of found node, just delete it
+                        prev->l = nullptr;
+                    } else if(!cur->r) {
+                        //if no right child of found node, set parent left to found node's left
+                        prev->l = cur->l;
+                    } else if(!cur->l) {
+                        //if no left child of found node, set parent left to found node's right
+                        prev->l = cur->r;
+                    } else {
+                        //found node has children on both sides
+                        if(cur->r->l) {
+                            //if node to remove's right child has a left child, it needs to be
+                            //moved to the furthest right descendant of the node to remove's left child
+                            Node* childToMove = cur->r->l;
+                            Node* ptr = cur->l;
+                            while(ptr->r) {
+                                ptr = ptr->r;
+                            }
+                            ptr->r = childToMove;
+                        }
+                        //node to remove's right child takes its place. Its l becomes the node to remove's l
+                        //and the parent of the node to remove's l becomes the node to remove's r
+                        cur->r->l = cur->l;
+                        prev->l = cur->r;
+                    }
+                    //finally clean up the node and break
+                    std::cout << "Deleting " << cur->data << std::endl;
+                    delete cur;
+                    return;
+                } else {
+                    //right child removal
+                    if(!cur->l && !cur->r) {
+                        //node to remove has no children, just delete it
+                        prev->r = nullptr;
+                    } else if(!cur->l) {
+                        //node to remove has no left child, just replace it with its right child
+                        prev->r = cur->r;
+                    } else if(!cur->r) {
+                        //node to remove has no right child, just replace it with its left child
+                        prev->r = cur->l;
+                    } else {
+                        //node to remove has both children
+                        if(cur->r->l) {
+                            //if node to remove's right child has a left child, it needs to be
+                            //moved to the furthest right descendant of the node to remove's left child
+                            Node* childToMove = cur->r->l;
+                            Node* ptr = cur->l;
+                            while(ptr->r) {
+                                ptr = ptr->r;
+                            }
+                            ptr->r = childToMove;
+                        }
+                        //node to remove's right child takes its place. Its l becomes the node to remove's l
+                        //and the parent of the node to remove's l becomes the node to remove's r
+                        cur->r->l = cur->l;
+                        prev->r = cur->r;
+                    }
+                    std::cout << "Deleting " << cur->data << std::endl;
+                    delete cur;
+                    return;
+                }
+            }
+
+            prev = cur;
+            if(cur->data < val) {
+                cur = cur->r;
+            } else {
+                cur = cur->l;
+            }
+        }
+        //if we got here, val is not in the set
+    }
+
+    void clear() {
+        if(root) {
+            clear(root);
+            root = nullptr;
         }
     }
 
     void dump() {
         if(root) {
             dump(root);
-            std::cout << std::endl;
         }
+        std::cout << std::endl;
     }
 };
