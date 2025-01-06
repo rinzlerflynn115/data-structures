@@ -181,6 +181,82 @@ void setTests() {
     set.dump();
     set.clear();
     br();
+
+    //1 2, 1
+    set.insert(1);
+    set.insert(2);
+    set.dump();
+    set.remove(2);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3, 1 2
+    set.insert(1);
+    set.insert(3);
+    set.insert(2);
+    set.dump();
+    set.remove(3);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3, 1 3
+    set.insert(1);
+    set.insert(2);
+    set.insert(3);
+    set.dump();
+    set.remove(2);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3 4, 1 2 4
+    set.insert(1);
+    set.insert(3);
+    set.insert(2);
+    set.insert(4);
+    set.dump();
+    set.remove(3);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3 4, 1 3 4
+    set.insert(1);
+    set.insert(2);
+    set.insert(4);
+    set.insert(3);
+    set.dump();
+    set.remove(2);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3 4 5, 1 2 3 5
+    set.insert(1);
+    set.insert(4);
+    set.insert(2);
+    set.insert(3);
+    set.insert(5);
+    set.dump();
+    set.remove(4);
+    set.dump();
+    set.clear();
+    br();
+
+    //1 2 3 4 5 6, 1 2 3 5 6
+    set.insert(1);
+    set.insert(4);
+    set.insert(2);
+    set.insert(3);
+    set.insert(6);
+    set.insert(5);
+    set.dump();
+    set.remove(4);
+    set.dump();
+    set.clear();
+    br();
 }
 
 int main() {
